@@ -1,10 +1,10 @@
-class SwapiService {
+export default class SwapiService {
   _baseUrl = "https://swapi.dev/api";
 
   async getResource(url) {
     const res = await fetch(`${this._baseUrl}${url}`);
     if (!res.ok) {
-      throw new Error(`Coild not fetch ${url}` + `, received ${res.status}`);
+      throw new Error(`Could not fetch ${url}` + `, received ${res.status}`);
     }
     return await res.json();
   }
@@ -37,15 +37,15 @@ class SwapiService {
   }
 }
 
-const swapi = new SwapiService();
+/* const swapi = new SwapiService();
 const allPeople = swapi.getAllPeople().then((people) => {
   people.forEach((p) => {
     return p.name;
   });
-});
+}); */
 
-const person = swapi.getPerson(2).then((person) => {
+/* const person = swapi.getPerson(2).then((person) => {
   console.log(person);
   return person;
 });
-console.log(person);
+console.log(person); */
