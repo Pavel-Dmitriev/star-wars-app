@@ -6,16 +6,18 @@ import Spinner from "../Spinner";
 
 import "./style.css";
 export default class RandomPlanet extends Component {
-  constructor() {
-    super();
-    this.updatePlanet();
-  }
   swapiService = new SwapiService();
   state = {
     planet: {},
     loading: true,
     error: false,
   };
+
+  componentDidMount() {
+    this.updatePlanet();
+    // this.interval = setInterval(this.updatePlanet, 10000);
+    // interval();
+  }
 
   onPlanetLoaded = (planet) => {
     this.setState({
@@ -31,10 +33,11 @@ export default class RandomPlanet extends Component {
       loading: false,
     });
   };
+
   updatePlanet() {
-    const id = Math.floor(Math.random() * 25 + 2);
+    const id = Math.floor(Math.random() * 17) + 2;
     this.swapiService
-      .getPlanets(id)
+      .getPlanet(id)
       .then(this.onPlanetLoaded)
       .catch(this.onError);
   }
@@ -48,7 +51,7 @@ export default class RandomPlanet extends Component {
     const viewPlanet = hasData ? <PlanetView planet={planet} /> : null;
 
     return (
-      <div className="random-planet card rounded">
+      <div className="random-planet card rounded mb-3">
         {errorMessage}
         {spinner}
         {viewPlanet}
