@@ -9,7 +9,7 @@ import "./style.css";
 export default class App extends Component {
   state = {
     showRandomPlanet: true,
-    selectedPerson: null,
+    selectedPerson: 2,
   };
 
   toggleRandomPlanet = () => {
