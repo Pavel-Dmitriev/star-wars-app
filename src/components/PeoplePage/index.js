@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import SwapiService from "../../services/swapi-service";
+import BodyWrapper from "../BodyWrapper";
+import ErrorBoundary from "../ErrorBoundary";
 import ErrorMessage from "../ErrorMessage";
 
 import ItemList from "../ItemList";
@@ -9,14 +11,7 @@ export default class PeoplePage extends Component {
   swapiService = new SwapiService();
   state = {
     selectedPerson: 2,
-    hasError: false,
   };
-
-  componentDidCatch() {
-    this.setState({
-      hasError: true,
-    });
-  }
 
   onPersonSelected = (id) => {
     this.setState({
@@ -27,21 +22,21 @@ export default class PeoplePage extends Component {
     if (this.state.hasError) {
       return <ErrorMessage />;
     }
+    const personDetails = (
+      <PersonDetails personId={this.state.selectedPerson} />
+    );
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onPersonSelected}
+        getData={this.swapiService.getAllPeople}
+      >
+        {(i) => `${i.name} (${i.birthYear})`}
+      </ItemList>
+    );
     return (
-      <React.Fragment>
-        <div className="col-md-6">
-          <ItemList
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllPeople}
-            renderItem={({ name, gender, birthYear }) =>
-              `${name} (${gender}, ${birthYear})`
-            }
-          />
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId={this.state.selectedPerson} />
-        </div>
-      </React.Fragment>
+      <ErrorBoundary>
+        <BodyWrapper left={itemList} right={personDetails} />
+      </ErrorBoundary>
     );
   }
 }

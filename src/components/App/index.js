@@ -4,7 +4,6 @@ import SwapiService from "../../services/swapi-service";
 
 import ErrorMessage from "../ErrorMessage";
 import Header from "../Header";
-import ItemList from "../ItemList";
 import PeoplePage from "../PeoplePage";
 import RandomPlanet from "../RandomPlanet";
 
@@ -45,23 +44,7 @@ export default class App extends Component {
         <button onClick={this.toggleRandomPlanet} className="btn btn-warning">
           toggleRandomPlanet
         </button>
-        <div className="row mt-2 mb-2">
-          <PeoplePage />
-
-          <div className="col-md-6 mt-2">
-            <ItemList
-              getData={this.swapiService.getAllStarships}
-              renderItem={({ name, passengers }) => `${name} (${passengers})`}
-            />
-          </div>
-
-          <div className="col-md-6 mt-2">
-            <ItemList
-              getData={this.swapiService.getAllPlanet}
-              renderItem={({ name, population }) => `${name} (${population})`}
-            />
-          </div>
-        </div>
+        <PeoplePage />
       </div>
     );
   }
