@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 
-import SwapiService from "../../services/swapi-service";
-
 import Spinner from "../Spinner";
 
 export const withDetailItemsData = (View, getData, getImageUrl) => {
   return class extends Component {
-    swapiService = new SwapiService();
-
     state = {
       item: [],
-      image: "",
+      image: null,
     };
 
     componentDidMount() {

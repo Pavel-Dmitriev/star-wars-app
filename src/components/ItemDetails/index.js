@@ -1,8 +1,4 @@
-import React, { Component } from "react";
-
-import SwapiService from "../../services/swapi-service";
-
-import { withDetailItemsData } from "../hoc-helpers/with-detail-items-data";
+import React from "react";
 
 import { ErrorButton } from "../ErrorButton";
 
@@ -10,6 +6,7 @@ import "./style.css";
 
 const ItemDetails = (props) => {
   const { item, image, children } = props;
+  console.log(props);
   const { name } = item;
 
   if (!item) {
@@ -33,5 +30,4 @@ const ItemDetails = (props) => {
   );
 };
 
-const { getPerson, getPersonImage } = new SwapiService();
-export default withDetailItemsData(ItemDetails, getPerson, getPersonImage);
+export default ItemDetails;
