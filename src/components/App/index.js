@@ -55,7 +55,8 @@ export default class App extends Component {
         <button onClick={this.toggleRandomPlanet} className="btn btn-warning">
           toggleRandomPlanet
         </button>
-        <PersonList>{(i) => `${i.name} (${i.birthYear})`}</PersonList>
+        <PersonList />
+        <StarshipList />
         <PersonDetails itemId={4}>
           <Record field="gender" label="Gender" />
           <Record field="birthYear" label="Birth Year" />

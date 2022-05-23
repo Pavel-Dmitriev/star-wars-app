@@ -6,7 +6,6 @@ import "./style.css";
 
 const ItemDetails = (props) => {
   const { item, image, children } = props;
-  console.log(props);
   const { name } = item;
 
   if (!item) {
