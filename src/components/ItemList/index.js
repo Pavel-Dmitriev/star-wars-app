@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SwapiService from "../../services/swapi-service";
+// import SwapiService from "../../services/swapi-service";
 import Spinner from "../Spinner";
 
 import "./style.css";
@@ -37,7 +37,6 @@ export default class ItemList extends Component {
 
   render() {
     const { itemList } = this.state;
-    // console.log(itemList);
     const items = this.renderItems(itemList);
 
     if (itemList.length === 0) {

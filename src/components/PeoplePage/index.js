@@ -5,7 +5,7 @@ import ErrorBoundary from "../ErrorBoundary";
 import ErrorMessage from "../ErrorMessage";
 
 import ItemList from "../ItemList";
-import PersonDetails from "../PersonDetails";
+import ItemDetails from "../ItemDetails";
 
 export default class PeoplePage extends Component {
   swapiService = new SwapiService();
@@ -22,20 +22,19 @@ export default class PeoplePage extends Component {
     if (this.state.hasError) {
       return <ErrorMessage />;
     }
-    const personDetails = (
-      <PersonDetails personId={this.state.selectedPerson} />
+
+    const { getAllPeople, getPerson } = this.swapiService;
+    const itemDetails = (
+      <ItemDetails itemId={this.state.selectedPerson} getData={getPerson} />
     );
     const itemList = (
-      <ItemList
-        onItemSelected={this.onPersonSelected}
-        getData={this.swapiService.getAllPeople}
-      >
+      <ItemList onItemSelected={this.onPersonSelected} getData={getAllPeople}>
         {(i) => `${i.name} (${i.birthYear})`}
       </ItemList>
     );
     return (
       <ErrorBoundary>
-        <BodyWrapper left={itemList} right={personDetails} />
+        <BodyWrapper left={itemList} right={itemDetails} />
       </ErrorBoundary>
     );
   }

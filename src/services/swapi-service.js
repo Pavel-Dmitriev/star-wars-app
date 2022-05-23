@@ -1,8 +1,10 @@
 export default class SwapiService {
-  _baseUrl = "https://swapi.dev/api";
+  _apiBase = "https://swapi.dev/api";
+  _imageBase = "https://starwars-visualguide.com/assets/img";
 
   getResource = async (url) => {
-    const res = await fetch(`${this._baseUrl}${url}`);
+    const res = await fetch(`${this._apiBase}${url}`);
+
     if (!res.ok) {
       throw new Error(`Could not fetch ${url}` + `, received ${res.status}`);
     }
@@ -11,7 +13,8 @@ export default class SwapiService {
 
   getAllPeople = async () => {
     const res = await this.getResource(`/people/`);
-    return res.results.map(this._transformPerson);
+    console.log(res);
+    return res.results.map(this._transformPerson).slice(0, 5);
   };
 
   getPerson = async (id) => {
@@ -19,9 +22,9 @@ export default class SwapiService {
     return this._transformPerson(person);
   };
 
-  getAllPlanet = async () => {
+  getAllPlanets = async () => {
     const res = await this.getResource(`/planets/`);
-    return res.results.map(this._transformPlanet);
+    return res.results.map(this._transformPlanet).slice(0, 5);
   };
 
   getPlanet = async (id) => {
@@ -31,12 +34,24 @@ export default class SwapiService {
 
   getAllStarships = async () => {
     const res = await this.getResource(`/starships/`);
-    return res.results.map(this._transformStarship);
+    return res.results.map(this._transformStarship).slice(0, 5);
   };
 
-  getStarships = async (id) => {
+  getStarship = async (id) => {
     const starship = await this.getResource(`/starships/${id}/`);
     return this._transformStarship(starship);
+  };
+
+  getPersonImage = ({ id }) => {
+    return `${this._imageBase}/characters/${id}.jpg`;
+  };
+
+  getStarshipImage = ({ id }) => {
+    return `${this._imageBase}/starships/${id}.jpg`;
+  };
+
+  getPlanetImage = ({ id }) => {
+    return `${this._imageBase}/planets/${id}.jpg`;
   };
 
   _extractId = (item) => {
@@ -78,16 +93,3 @@ export default class SwapiService {
     };
   };
 }
-
-/* const swapi = new SwapiService();
-const allPeople = swapi.getAllPeople().then((people) => {
-  people.forEach((p) => {
-    return p.name;
-  });
-}); */
-
-/* const person = swapi.getPerson(2).then((person) => {
-  console.log(person);
-  return person;
-});
-console.log(person); */
