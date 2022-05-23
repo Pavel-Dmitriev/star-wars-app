@@ -5,7 +5,9 @@ import BodyWrapper from "../BodyWrapper";
 
 import ErrorMessage from "../ErrorMessage";
 import Header from "../Header";
-import ItemDetails, { Record } from "../ItemDetails";
+import ItemDetails from "../ItemDetails";
+import Record from "../ItemDetails/Record";
+import ItemList from "../ItemList";
 // import PeoplePage from "../PeoplePage";
 // import RandomPlanet from "../RandomPlanet";
 
@@ -35,11 +37,17 @@ export default class App extends Component {
 
   render() {
     // const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
-    const { getPerson, getPersonImage } = this.swapiService;
+    const { getPerson, getAllPeople, getPersonImage } = this.swapiService;
 
     if (this.state.hasError) {
       return <ErrorMessage />;
     }
+
+    const PersonList = (
+      <ItemList getData={getAllPeople} onItemSelected={() => {}}>
+        {({ name, birthYear }) => `${name} (${birthYear})`}
+      </ItemList>
+    );
 
     const itemPerson = (
       <ItemDetails itemId={4} getData={getPerson} getImageUrl={getPersonImage}>
@@ -57,7 +65,7 @@ export default class App extends Component {
         {/* <button onClick={this.toggleRandomPlanet} className="btn btn-warning">
           toggleRandomPlanet
         </button> */}
-        <BodyWrapper left={itemPerson} right={null} />
+        <BodyWrapper left={PersonList} right={itemPerson} />
         {/* <PeoplePage /> */}
       </div>
     );
