@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Spinner from "../Spinner";
 
-export const withDetailItemsData = (View, getData, getImageUrl) => {
+const withDetailItemsData = (View, getData, getImageUrl) => {
   return class extends Component {
     state = {
       item: [],
@@ -34,6 +34,7 @@ export const withDetailItemsData = (View, getData, getImageUrl) => {
     }
     render() {
       const { item, image } = this.state;
+
       if (!item) {
         return <Spinner />;
       }
@@ -41,3 +42,5 @@ export const withDetailItemsData = (View, getData, getImageUrl) => {
     }
   };
 };
+
+export default withDetailItemsData;

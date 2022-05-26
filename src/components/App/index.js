@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 
 import SwapiService from "../../services/swapi-service";
-import BodyWrapper from "../BodyWrapper";
+import { SwapiServiceProvider } from "../../swapi-service-context";
 
 import ErrorMessage from "../ErrorMessage";
+import ErrorBoundary from "../ErrorBoundary";
 import Header from "../Header";
-import Record from "../ItemDetails/Record";
-import { PersonDetails } from "../sw-components/details";
-// import ItemList from "../ItemList";
+
 import {
   PersonList,
   PlanetList,
   StarshipList,
 } from "../sw-components/item-lists";
-// import PeoplePage from "../PeoplePage";
-// import RandomPlanet from "../RandomPlanet";
+import PlanetDetails from "../sw-components/planet-details";
+import PersonDetails from "../sw-components/person-details";
 
 import "./style.css";
+import StarshipDetails from "../sw-components/starship-details";
 
 export default class App extends Component {
   swapiService = new SwapiService();
@@ -50,22 +50,26 @@ export default class App extends Component {
 
     // const itemStarships = <ItemDetails itemId={5} getData={getStarships} />;
     return (
-      <div className="container">
-        <Header />
-        <button onClick={this.toggleRandomPlanet} className="btn btn-warning">
-          toggleRandomPlanet
-        </button>
-        <PersonList />
-        <StarshipList />
-        <PersonDetails itemId={4}>
-          <Record field="gender" label="Gender" />
-          <Record field="birthYear" label="Birth Year" />
-          <Record field="eyeColor" label="Eye Color" />
-        </PersonDetails>
-        {/* <StarshipList>{({ name }) => `${name} ()`}</StarshipList> */}
-        {/* {planet} */}
-        {/* <PeoplePage /> */}
-      </div>
+      <ErrorBoundary>
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="container">
+            <Header />
+            <button
+              onClick={this.toggleRandomPlanet}
+              className="btn btn-warning"
+            >
+              toggleRandomPlanet
+            </button>
+            <PersonList />
+            <StarshipList />
+            <PersonDetails itemId={4} />
+            <PlanetDetails itemId={7} />
+            <StarshipDetails itemId={5} />
+            {/* {planet} */}
+            {/* <PeoplePage /> */}
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundary>
     );
   }
 }
