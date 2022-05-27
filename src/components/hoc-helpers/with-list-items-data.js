@@ -2,14 +2,14 @@ import React, { Component } from "react";
 
 import Spinner from "../Spinner";
 
-export const withListItemsData = (View, getData) => {
+export const withListItemsData = (View) => {
   return class extends Component {
     state = {
       data: [],
     };
 
     componentDidMount() {
-      getData().then((data) => {
+      this.props.getData().then((data) => {
         this.setState({
           data,
         });
