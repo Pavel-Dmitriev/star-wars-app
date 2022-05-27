@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Spinner from "../Spinner";
 
-const withDetailItemsData = (View, getData, getImageUrl) => {
+const withDetailItemsData = (View) => {
   return class extends Component {
     state = {
       item: [],
@@ -25,10 +25,10 @@ const withDetailItemsData = (View, getData, getImageUrl) => {
         return;
       }
 
-      getData(itemId).then((item) => {
+      this.props.getData(itemId).then((item) => {
         this.setState({
           item,
-          image: getImageUrl(item),
+          image: this.props.getImageUrl(item),
         });
       });
     }
