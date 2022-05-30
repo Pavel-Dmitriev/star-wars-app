@@ -1,5 +1,3 @@
-import React from "react";
-
 import withDetailItemsData from "../hoc-helpers/with-detail-items-data";
 import { withSwapiService } from "../hoc-helpers/withSwapiService";
 

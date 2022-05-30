@@ -8,7 +8,7 @@ export const withListItemsData = (View) => {
     state = {
       data: [],
       loading: true,
-      hasError: false,
+      error: false,
     };
 
     componentDidUpdate(prevProps) {
