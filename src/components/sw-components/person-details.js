@@ -12,9 +12,8 @@ const mapMethodsToProps = (swapiService) => {
   };
 };
 
-const PersonDetails = withSwapiService(
-  withDetailItemsData(ItemDetails),
-  mapMethodsToProps
+const PersonDetails = withSwapiService(mapMethodsToProps)(
+  withDetailItemsData(ItemDetails)
 );
 
 export default PersonDetails;
