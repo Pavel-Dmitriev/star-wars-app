@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import ErrorMessage from "../ErrorMessage";
 import Spinner from "../Spinner";
 
 const withDetailItemsData = (View) => {
@@ -7,6 +8,8 @@ const withDetailItemsData = (View) => {
     state = {
       item: [],
       image: null,
+      loading: true,
+      error: false,
     };
 
     componentDidMount() {
@@ -21,22 +24,37 @@ const withDetailItemsData = (View) => {
 
     updateItem() {
       const { itemId } = this.props;
-      if (!itemId) {
-        return;
-      }
 
-      this.props.getData(itemId).then((item) => {
-        this.setState({
-          item,
-          image: this.props.getImageUrl(item),
-        });
+      this.setState({
+        loading: true,
+        error: false,
       });
+
+      this.props
+        .getData(itemId)
+        .then((item) => {
+          this.setState({
+            item,
+            image: this.props.getImageUrl(item),
+            loading: false,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            loading: false,
+            error: true,
+          });
+        });
     }
     render() {
-      const { item, image } = this.state;
+      const { item, image, loading, error } = this.state;
 
-      if (!item) {
+      if (loading) {
         return <Spinner />;
+      }
+
+      if (error) {
+        return <ErrorMessage />;
       }
       return <View {...this.props} item={item} image={image}></View>;
     }
